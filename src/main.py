@@ -1,24 +1,12 @@
-from textnode import TextNode, TextType
-import os
 import shutil
-import errno
-
-def copy_directory(source, destination):
-    if not os.path.exists(destination):
-        os.mkdir(destination)
-
-    for item in os.listdir(source):
-        from_path = os.path.join(source, item)
-        to_path = os.path.join(destination, item)
-        print(f" * {from_path} copied to {to_path}")
-        if os.path.isfile(from_path):
-            shutil.copy(from_path, to_path)
-        else:
-            copy_directory(from_path, to_path)
-
+from generate import *
+    
 def main():
     src = "static/"
     dst = "public/"
+    src_content = "content/index.md"
+    template = "template.html"
+    dst_content = "public/index.html"
 
     print("deleting public directory...")
     if os.path.exists(dst):
@@ -26,5 +14,8 @@ def main():
     
     print("copying static directory to public directory...")
     copy_directory(src, dst)
+
+    print("generating page from markdown")
+    generate_page(src_content, template, dst_content)
 
 main()
