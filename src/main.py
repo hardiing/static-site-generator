@@ -1,12 +1,13 @@
 import shutil
+import os
 from generate import *
     
 def main():
     src = "static/"
     dst = "public/"
-    src_content = "content/index.md"
-    template = "template.html"
-    dst_content = "public/index.html"
+    src_content = "./content"
+    template = "./template.html"
+    dst_content = "./public"
 
     print("deleting public directory...")
     if os.path.exists(dst):
@@ -15,7 +16,7 @@ def main():
     print("copying static directory to public directory...")
     copy_directory(src, dst)
 
-    print("generating page from markdown")
-    generate_page(src_content, template, dst_content)
+    print("generating pages from markdown")
+    generate_pages_recursive(src_content, template, dst_content)
 
 main()
